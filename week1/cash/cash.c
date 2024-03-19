@@ -2,18 +2,33 @@
 #include <stdio.h>
 
 int get_user_cents_count();
-int calculate_quarters(int cents);
+int calculate_coins(int cents, int step);
+int calculate_coins_left(int cents, int coins, int step);
+
+int QUARTER_STEP = 25;
+int DIMMES_STEP = 10;
+int NICKELS_STEP = 5;
+int PENNIES_STEP = 1;
 
 int main(void)
 {
-
     int cents = get_user_cents_count();
 
-    int quarters = calculate_quarters(cents);
+    int quarters = calculate_coins(cents, QUARTER_STEP);
+    cents = calculate_coins_left(cents, quarters, QUARTER_STEP);
 
-    cents = cents - (quarters *  25);
+    int dimmes = calculate_coins(cents, DIMMES_STEP);
+    cents = calculate_coins_left(cents, dimmes, DIMMES_STEP);
 
-    printf("Quarters: %i\n", cents);
+    int nickels = calculate_coins(cents, NICKELS_STEP);
+    cents = calculate_coins_left(cents, nickels, NICKELS_STEP);
+
+    int pennies = calculate_coins(cents, PENNIES_STEP);
+    cents = calculate_coins_left(cents, pennies, PENNIES_STEP);
+
+    int coins = quarters + dimmes + nickels + pennies;
+
+    printf("%i\n", coins);
 }
 
 int get_user_cents_count()
@@ -31,29 +46,19 @@ int get_user_cents_count()
     return cents;
 }
 
-int calculate_quarters(int cents)
+int calculate_coins(int cents, int step)
 {
-    int quarters = 0;
-    while (cents >= 25)
+    int coins = 0;
+    while (cents >= step)
     {
-        quarters++;
-        cents = cents - 25;
+        coins++;
+        cents = cents - step;
     }
 
-    return quarters;
+    return coins;
 }
 
-int calculate_dimes(int cents)
+int calculate_coins_left(int cents, int coins, int step)
 {
-
-}
-
-int calculate_nickels(int cents)
-{
-
-}
-
-int calculate_pennies(int cents)
-{
-
+    return cents - (coins * step);
 }
