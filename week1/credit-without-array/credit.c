@@ -2,65 +2,68 @@
 #include <stdio.h>
 
 int get_number_digit_sum(int number);
-int get_array_from_number(long number, int number_length);
 bool is_credit_card_type_visa(int first_digit, int length);
 bool is_credit_card_type_mastercard(int first_digit, int second_digit, int length);
 bool is_credit_card_type_amex(int first_digit, int second_digit, int length);
 
 int main(void)
 {
-    long credit_card_number = get_long("Credit card: ");
-    long local_credit_card_number = credit_card_number;
-    int credit_card_length = 0;
+    long card_number = get_long("Credit card: ");
+    int card_number_length = 0;
 
-    long number_local = credit_card_number;
-    int credit_card_luhn_sum = 0;
-    int current_number = 0;
-    long number_length = 1;
+    int card_luhn_sum = 0;
+    long card_number_divider = 1;
+    long card_number_saved = card_number;
 
-    while (local_credit_card_number != 0)
+    while (card_number_saved != 0)
     {
-        current_number = local_credit_card_number % 10;
-        local_credit_card_number = local_credit_card_number / 10;
-        number_length = number_length * 10;
+        int current_number = card_number_saved % 10;
+        card_number_saved = card_number_saved / 10;
+        card_number_divider = card_number_divider * 10;
 
-        if ((credit_card_length + 1) % 2 == 0) {
-          if ((current_number * 2) >= 10) {
-            credit_card_luhn_sum = credit_card_luhn_sum + get_number_digit_sum(current_number * 2);
-          } else {
-            credit_card_luhn_sum = credit_card_luhn_sum + (current_number * 2);
-          }
-        } else {
-          credit_card_luhn_sum = credit_card_luhn_sum + current_number;
+        if ((card_number_length + 1) % 2 == 0) 
+        {
+            if ((current_number * 2) >= 10) 
+            {
+                card_luhn_sum = card_luhn_sum + get_number_digit_sum(current_number * 2);
+            } 
+            else 
+            {
+                card_luhn_sum = card_luhn_sum + (current_number * 2);
+            }
+        } 
+        else 
+        {
+            card_luhn_sum = card_luhn_sum + current_number;
         }
-        credit_card_length++;
+        card_number_length++;
     }
 
-    int credit_card_first_digit = credit_card_number / (number_length / 10);
-    int credit_card_second_digit = (credit_card_number / (number_length / 100)) % 10; 
+    int credit_card_first_digit = card_number / (card_number_divider / 10);
+    int credit_card_second_digit = (card_number / (card_number_divider / 100)) % 10; 
 
-    if (credit_card_length > 16 || credit_card_length < 13)
+    if (card_number_length > 16 || card_number_length < 13)
     {
         printf("%s\n", "INVALID");
         return 0;
     }
 
-    if (is_credit_card_type_visa(credit_card_first_digit, credit_card_length) &&
-        credit_card_luhn_sum % 10 == 0)
+    if (is_credit_card_type_visa(credit_card_first_digit, card_number_length) &&
+        card_luhn_sum % 10 == 0)
     {
         printf("%s\n", "VISA");
     }
 
     else if (is_credit_card_type_mastercard(credit_card_first_digit, credit_card_second_digit, 
-                                            credit_card_length) && 
-             credit_card_luhn_sum % 10 == 0) 
+                                            card_number_length) && 
+             card_luhn_sum % 10 == 0) 
     {
         printf("%s\n", "MASTERCARD");
     }
 
     else if (is_credit_card_type_amex(credit_card_first_digit, credit_card_second_digit, 
-                                      credit_card_length) && 
-             credit_card_luhn_sum % 10 == 0) 
+                                      card_number_length) && 
+             card_luhn_sum % 10 == 0) 
     {
         printf("%s\n", "AMEX");
     }
