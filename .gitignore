@@ -1,2 +1,4 @@
-credit.dSYM/
+/**/*.dSYM/
+.out
+.hex
 cs50env/
