@@ -5,27 +5,28 @@
 
 int main(void) 
 {
-    string test = get_string("Text: ");
+    string text = get_string("Text: ");
 
     float words_count = 0;
     float char_count = 0;
     float sentence_count = 0;
 
-    for (int c = 0; c < strlen(test); c++) 
+    for (int c = 0; c < strlen(text); c++) 
     {
-        if ((test[c] >= 65 && test[c] <= 90) || (test[c] >= 97 && test[c] <= 122))
+        if ((text[c] >= 65 && text[c] <= 90) || 
+            (text[c] >= 97 && text[c] <= 122))
         {
             char_count += 1;
         }
-        if (((test[c] >= 65 && test[c] <= 90) || (test[c] >= 97 && test[c] <= 122)) && 
-            (test[c + 1] == 32 || test[c + 1] == 44 || test[c + 1] == 46 || test[c + 1] == 33 || 
-             test[c + 1] == 34 || test[c + 1] == 59 || test[c + 1] == 58 || test[c + 1] == 63))
+        if (((text[c] >= 65 && text[c] <= 90) || (text[c] >= 97 && text[c] <= 122)) && 
+            (text[c + 1] == 32 || text[c + 1] == 44 || text[c + 1] == 46 || text[c + 1] == 33 || 
+             text[c + 1] == 34 || text[c + 1] == 59 || text[c + 1] == 58 || text[c + 1] == 63))
         {
             words_count += 1;
         }
-        if (((test[c] >= 65 && test[c] <= 90) || (test[c] >= 97 && test[c] <= 122) || 
-             test[c] == 32) && 
-            (test[c + 1] == 46 || test[c + 1] == 33 || test[c + 1] == 63))
+        if (((text[c] >= 65 && text[c] <= 90) || (text[c] >= 97 && text[c] <= 122) || 
+             text[c] == 32) && 
+            (text[c + 1] == 46 || text[c + 1] == 33 || text[c + 1] == 63))
         {
             sentence_count += 1;
         }
